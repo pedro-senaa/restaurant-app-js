@@ -3,49 +3,40 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Menu extends Model {
+  class Order extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Menu.hasMany(models.OrderItems, {
-        foreignKey: 'menuId',
+      Order.belongsTo(models.Tab, {
+        foreignKey: 'tabId',
+        as: 'Tab'
+      })
+
+      Order.hasMany(models.OrderItems, {
+        foreignKey: 'orderId',
         as: 'OrderItems',
       })
     }
   }
-  Menu.init({
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    price: {
+  Order.init({
+    tabId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        min: 0
+      references: {
+        model: 'Tab',
+        key: 'id'
       },
-    },
-    description: {
-      type: DataTypes.STRING
-
-    },
-    isFood: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false
-    },
-    isDrink: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     }
   }, {
     sequelize,
-    modelName: 'Menu',
+    modelName: 'Order',
     freezeTableName: true,
   });
 
-
-  return Menu;
+  return Order;
 };
