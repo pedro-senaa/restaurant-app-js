@@ -10,7 +10,7 @@ menuRouter.get('/', async (req, res, next) => {
         return res.status(200).json({ menuData });
     } catch (err) {
         console.error('Error fetching data', err);
-        return res.status(500).json({ Message: 'Error fetching data', error: err.message })
+        return res.status(500).json({ message: 'Error fetching data', error: err.message })
     }
 });
 
@@ -39,7 +39,7 @@ menuRouter.post('/', async (req, res, next) => {
 
     } catch (err) {
         console.error('Error inserting data', err);
-        return res.status(500).json({ Message: 'Error inserting data', error: err.message })
+        return res.status(500).json({ message: 'Error inserting data', error: err.message })
     }
 });
 
